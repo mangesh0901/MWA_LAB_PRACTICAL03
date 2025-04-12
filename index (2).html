@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="studentApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal Form</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-controller="StudentController">
+    <div class="container">
+        <h2>Student Portal Form</h2>
+        <form name="studentForm" ng-submit="submitForm()" novalidate>
+            <label>Name:</label>
+            <input type="text" name="name" ng-model="student.name" required>
+            <span class="error" ng-show="studentForm.name.$touched && studentForm.name.$invalid">Name is required.</span>
+
+            <label>Email:</label>
+            <input type="email" name="email" ng-model="student.email" required>
+            <span class="error" ng-show="studentForm.email.$touched && studentForm.email.$invalid">Enter a valid email.</span>
+
+            <label>Course:</label>
+            <select name="course" ng-model="student.course" required>
+                <option value="">Select Course</option>
+                <option value="Computer Science">Computer Science</option>
+                <option value="Mechanical Engineering">Mechanical Engineering</option>
+                <option value="Civil Engineering">Civil Engineering</option>
+                <option value="Electrical Engineering">Electrical Engineering</option>
+            </select>
+            <span class="error" ng-show="studentForm.course.$touched && studentForm.course.$invalid">Select a course.</span>
+
+            <button type="submit" ng-disabled="studentForm.$invalid">Submit</button>
+        </form>
+        <div ng-show="submitted">
+            <p><strong>Name:</strong> {{student.name}}</p>
+            <p><strong>Email:</strong> {{student.email}}</p>
+            <p><strong>Course:</strong> {{student.course}}</p>
+        </div>
+    </div>
+
+    <script>
+        var app = angular.module('studentApp', []);
+        app.controller('StudentController', function($scope) {
+            $scope.student = {};
+            $scope.submitted = false;
+            
+            $scope.submitForm = function() {
+                if ($scope.studentForm.$valid) {
+                    $scope.submitted = true;
+                }
+            };
+        });
+    </script>
+</body>
+</html>
